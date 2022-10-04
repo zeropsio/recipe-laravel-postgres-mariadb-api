@@ -1,0 +1,15 @@
+api:
+  build:
+    base: [php@8.0]
+    build:
+      - composer install --optimize-autoloader --no-dev
+      - php artisan env
+    deploy: [.]
+    cache: [ 'vendor' ]
+  run:
+    init:
+      - echo "init"
+      - php artisan config:clear
+      - php artisan cache:clear
+      - php artisan migrate -n --force
+    documentRoot: 'public/'
